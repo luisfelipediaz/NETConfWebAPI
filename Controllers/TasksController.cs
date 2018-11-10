@@ -27,5 +27,27 @@ namespace NETConfWebAPI.Controllers
                 return context.Tasks.ToList();
             }
         }
+
+        [HttpPut("{id}")]
+        public void Put(int id, [FromBody] Task task)
+        {
+            using (var context = new TasksContext())
+            {
+                Task taskToChange = context.Tasks.Find(id);
+                taskToChange.State = task.State;
+                context.SaveChanges();
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+            using (var context = new TasksContext())
+            {
+                Task taskToDelete = context.Tasks.Find(id);
+                context.Remove(taskToDelete);
+                context.SaveChanges();
+            }
+        }
     }
 }
